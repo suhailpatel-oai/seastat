@@ -1,0 +1,25 @@
+{
+  "request": {
+    "mbean": "org.apache.cassandra.metrics:name=*,type=CQL",
+    "type": "read"
+  },
+  "value": {
+    "org.apache.cassandra.metrics:name=PreparedStatementsCount,type=CQL": {
+      "Value": 5
+    },
+    "org.apache.cassandra.metrics:name=PreparedStatementsExecuted,type=CQL": {
+      "Count": 806
+    },
+    "org.apache.cassandra.metrics:name=PreparedStatementsEvicted,type=CQL": {
+      "Count": 0
+    },
+    "org.apache.cassandra.metrics:name=PreparedStatementsRatio,type=CQL": {
+      "Value": 0.9805352798053528
+    },
+    "org.apache.cassandra.metrics:name=RegularStatementsExecuted,type=CQL": {
+      "Count": 16
+    }
+  },
+  "timestamp": 1793054923,
+  "status": 200
+}

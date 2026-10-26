@@ -18,7 +18,9 @@ A very (non-scientific) test with 4000 tables across 200 keyspaces took between 
 
 Seastat doesn't speak JMX directly. Instead, it uses [Jolokia](https://jolokia.org/) to translate back and forth into JMX. You will need Jolokia to be embedded as an agent into your Cassandra process. Jolokia versions 1.3+ will work just fine (the exporter has been tested with Jolokia v1.3 and v1.6).
 
-Seastat has been designed on top of Cassandra 3.0 (specifically, 3.0.18). It may work with 3.11+ but some of the metric types may have changed between the two versions which may result in zero values.
+Seastat was designed on top of Cassandra 3.0 (specifically, 3.0.18). It has also been tested with Cassandra 3.11.19 and Jolokia 1.3.7 on a single node using reads, writes, conditional updates, range scans, and flushes.
+
+Cassandra 3.11.19 does not expose the table MBeans `CoordinatorWriteLatency` or `SpeculativeFailedRetries`. Their exported metrics, `seastat_table_coordinator_write_latency_seconds` and `seastat_table_speculative_failed_retries_total`, remain zero even though these metrics are unavailable. Use `seastat_table_write_latency_seconds` for local table write latency. A successful health check does not guarantee that every metric is available.
 
 # Metrics Exposed
 
@@ -179,6 +181,15 @@ $ ./seastat server -p 8080
 $ # To run on port 8080 with debug logging
 $ ./seastat server -p 8080 -v debug
 ```
+
+The Docker harness defaults to Cassandra 3.0.18. To run it with Cassandra 3.11.19 and expose Jolokia locally:
+
+```shell
+$ docker build --build-arg CASSANDRA_VERSION=3.11.19 -t seastat-cassandra:3.11.19 harness
+$ docker run --rm --name seastat-cassandra -p 127.0.0.1:8778:8778 seastat-cassandra:3.11.19
+```
+
+Once Cassandra finishes starting, run Seastat in another terminal with the commands above.
 
 If you find Jolokia getting stuck and timing out, consider tuning down the concurrency parameter (which controls
 the maximum number of Jolokia requests in flight at any one time).

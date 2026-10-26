@@ -190,7 +190,7 @@ func (c *jolokiaClient) CQLStats() (CQLStats, error) {
 		attributes := extractAttributes(string(key))
 		switch attributes["name"] {
 		case "PreparedStatementsCount":
-			stats.PreparedStatementsCount = Gauge(val.Get("Count").GetInt64())
+			stats.PreparedStatementsCount = Gauge(val.Get("Value").GetInt64())
 		case "PreparedStatementsEvicted":
 			stats.PreparedStatementsEvicted = Counter(val.Get("Count").GetInt64())
 		case "PreparedStatementsExecuted":
