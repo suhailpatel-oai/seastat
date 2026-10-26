@@ -1,4 +1,5 @@
-FROM cassandra:3.0.18
+ARG CASSANDRA_VERSION=3.0.18
+FROM cassandra:${CASSANDRA_VERSION}
 
 # Add in the Jolokia agent
 ADD https://repo1.maven.org/maven2/org/jolokia/jolokia-jvm/1.3.7/jolokia-jvm-1.3.7-agent.jar /usr/share/jolokia-jvm-1.3.7-agent.jar
